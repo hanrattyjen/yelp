@@ -69,15 +69,26 @@ feature 'restaurants' do
   end
 
   context 'deleting restaurants' do
-    before { Restaurant.create name: 'KFC', description: 'Deep fired goodness' }
+
+    before { Restaurant.create name: "Burger King", description: "Good stuff" }
 
     scenario 'removes a restaurant when a user clicks a delete link' do
+      click_link 'Add a restaurant'
+      fill_in 'Name', with: 'KFC'
+      click_button 'Create Restaurant'
       visit 'restaurants'
       click_link 'Delete KFC'
       expect(page).not_to have_content 'KFC'
       expect(page).to have_content 'Restaurant deleted successfully'
     end
+
+    scenario 'A user who has not created that restaurant cannot delete it' do
+      visit 'restaurants'
+      expect(page).not_to have_link 'Delete Burger King'
+    end
+
   end
+
   context 'an invalid restaurant' do
     scenario 'does not let you submit a name that is too short' do
       visit '/restaurants'

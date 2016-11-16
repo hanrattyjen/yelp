@@ -1,5 +1,6 @@
 class User < ApplicationRecord
  has_many :reviews
+ has_many :restaurants
  has_many :reviewed_restaurants, through: :reviews, source: :restaurant
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
@@ -9,6 +10,15 @@ class User < ApplicationRecord
 
   def has_reviewed?(restaurant)
    reviewed_restaurants.include? restaurant
+  end
+
+  def build_restaurant(attributes = {}, user)
+    attributes[:user_id] ||= user.id
+    restaurants.build(attributes)
+  end
+
+  def can_delete?(current_user, restaurant)
+    restaurant.user_id == current_user.id ? true : false
   end
 
   def self.from_omniauth(auth)
