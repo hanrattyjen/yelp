@@ -42,6 +42,14 @@ feature 'User signs in' do
     fill_in 'Password', with: '123456'
     click_button('Sign in')
     expect(current_path).to eq('/')
-    
+
+  end
+end
+
+feature 'User not signed in' do
+  scenario 'User cannot add a restaurant unless signed in' do
+    visit('/')
+    click_link('Add a restaurant')
+    expect(current_path).to eq('/users/sign_in')
   end
 end
