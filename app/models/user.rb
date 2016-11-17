@@ -21,6 +21,10 @@ class User < ApplicationRecord
     restaurant.user_id == current_user.id ? true : false
   end
 
+  def can_edit?(current_user, restaurant)
+    restaurant.user_id == current_user.id ? true : false
+  end
+
   def self.from_omniauth(auth)
     where(provider: auth.provider, uid: auth.uid).first_or_create do |user|
     user.email = auth.info.email

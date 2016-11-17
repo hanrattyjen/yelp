@@ -54,10 +54,13 @@ feature 'restaurants' do
   end
 
   context 'editing restaurants' do
-    before { Restaurant.create name: 'KFC', description: 'Deep fried goodness'}
+    before { Restaurant.create name: "Burger King", description: "Good stuff" }
 
     scenario 'let a user edit a restaurant' do
       visit '/restaurants'
+      click_link 'Add a restaurant'
+      fill_in 'Name', with: 'KFC'
+      click_button 'Create Restaurant'
       click_link 'Edit KFC'
       fill_in 'Name', with: 'Kentucky Fried Chicken'
       fill_in 'Description', with: 'Deep fried goodness'
@@ -65,6 +68,11 @@ feature 'restaurants' do
       expect(page).to have_content 'Kentucky Fried Chicken'
       expect(page).to have_content 'Deep fried goodness'
       expect(current_path).to eq '/restaurants'
+    end
+
+    scenario 'A user who has not created a restaurant cannot edit it' do
+      visit '/restaurants'
+      expect(page).not_to have_link 'Edit Burger King'
     end
   end
 
@@ -83,7 +91,7 @@ feature 'restaurants' do
     end
 
     scenario 'A user who has not created that restaurant cannot delete it' do
-      visit 'restaurants'
+      visit '/restaurants'
       expect(page).not_to have_link 'Delete Burger King'
     end
 
