@@ -15,7 +15,10 @@
   </div>
     <% if restaurant.reviews.any? %>
        <% restaurant.reviews.each do |review| %>
-         <p><%= review.thoughts %> Rating: <%= review.rating %></p>
+         <p><%= review.thoughts %> Rating: <%= review.rating %> <p>
+         <% if current_user != nil && current_user.can_delete?(current_user, review) %>
+            <p><%= link_to "Delete review", restaurant_reviews_path(review), method: :delete %></p>
+        <% end %>
        <% end %>
      <% end %>
     <% end %>
