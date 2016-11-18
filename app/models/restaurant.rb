@@ -10,8 +10,7 @@ class Restaurant < ApplicationRecord
 
   def average_rating
     return 'N/A' if reviews.none?
-    return reviews.count
-    # reviews.average(:rating)
+    reviews.inject(0) {|memo, review| memo + review.rating} / reviews.size
   end
 
 end

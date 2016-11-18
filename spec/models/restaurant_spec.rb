@@ -36,9 +36,9 @@ describe Restaurant do
         restaurant = Restaurant.create(name: 'The Ivy')
         restaurant.reviews.create(rating: 1)
         restaurant.reviews.create(rating: 5)
-        p restaurant.reviews
+        # p restaurant.reviews.size
         # p restaurant.reviews.average(:rating)
-        # p restaurant.reviews.inject(0) {|memo, review| memo + review.rating} / reviews.count
+        # p restaurant.reviews.inject(0) {|memo, review| memo + review.rating} / reviews.size
 
         expect(restaurant.average_rating).to eq 3
       end
