@@ -33,7 +33,6 @@ gem 'devise'
 gem 'omniauth-facebook'
 gem 'factory_girl'
 
-
 group :test do
   gem 'rspec-rails'
   gem 'capybara'

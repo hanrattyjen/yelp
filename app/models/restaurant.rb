@@ -7,4 +7,11 @@ class Restaurant < ApplicationRecord
     attributes[:user] ||= user
     reviews.build(attributes)
   end
+
+  def average_rating
+    return 'N/A' if reviews.none?
+    return reviews.count
+    # reviews.average(:rating)
+  end
+
 end

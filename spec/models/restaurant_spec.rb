@@ -14,6 +14,36 @@ describe Restaurant do
     restaurant = Restaurant.new(name: "Moe's Tavern")
     expect(restaurant).to have(1).error_on(:name)
   end
+
+  describe '#average_rating' do
+    context 'no reviews' do
+      it 'returns "N/A" when there are no reviews' do
+        restaurant = Restaurant.create(name: 'The Ivy')
+        expect(restaurant.average_rating).to eq 'N/A'
+      end
+    end
+
+    context '1 review' do
+      it 'returns that rating' do
+        restaurant = Restaurant.create(name: 'The Ivy')
+        restaurant.reviews.create(rating: 4)
+        expect(restaurant.average_rating).to eq 4
+      end
+    end
+
+    context 'multiple reviews' do
+      it 'returns the average' do
+        restaurant = Restaurant.create(name: 'The Ivy')
+        restaurant.reviews.create(rating: 1)
+        restaurant.reviews.create(rating: 5)
+        p restaurant.reviews
+        # p restaurant.reviews.average(:rating)
+        # p restaurant.reviews.inject(0) {|memo, review| memo + review.rating} / reviews.count
+
+        expect(restaurant.average_rating).to eq 3
+      end
+    end
+  end
 end
 
 describe 'reviews' do
