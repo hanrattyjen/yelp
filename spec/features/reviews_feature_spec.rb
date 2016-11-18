@@ -1,5 +1,4 @@
 require 'rails_helper'
-require_relative './webhelpers'
 
 feature 'reviewing' do
 
@@ -36,7 +35,8 @@ feature 'reviewing' do
     click_link 'Sign out'
     sign_up_as_diff_user
     leave_review('Great', '5')
-    expect(page).to have_content('Average rating: 4')
+    expect(page).to have_content('Average rating: ★★★★☆')
+    p page
   end
 
   def leave_review(thoughts, rating)
